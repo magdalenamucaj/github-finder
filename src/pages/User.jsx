@@ -4,9 +4,10 @@ import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import GithubContext from "../context/github/GithubContext";
 import Spinner from "../components/layout/Spinner";
+import RepoList from "../components/repos/RepoList";
 
 function User() {
-  const { getUser, user, loading } = useContext(GithubContext);
+  const { getUser, user, repos, loading } = useContext(GithubContext);
   const params = useParams();
 
   useEffect(() => {
@@ -159,6 +160,8 @@ function User() {
             {public_gists}
           </div>
         </div>
+
+        <RepoList repos={repos} />
         
       </div>
     </div>
