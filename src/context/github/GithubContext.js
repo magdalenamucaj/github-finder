@@ -76,16 +76,21 @@ export const GithubProvider = ({ children }) => {
     }
   };
 
-//   // Get user and repos
-//  const getUserAndRepos = async (login) => {
-//   const response = await fetch(`${GITHUB_URL}/users/${login}`, {
-//     headers: {
-//       Authorization: `token: ${GITHUB_TOKEN}`,
-//     },
-//   });
+  // Get user and repos
+  const getUserAndRepos = async (login) => {
+    const response = await fetch(`${GITHUB_URL}/users/${login}/repos`, {
+      headers: {
+        Authorization: `token: ${GITHUB_TOKEN}`,
+      },
+    });
 
-//   return { user: user.data, repos: repos.data }
-// }
+    const data = await response.json();
+
+    dispatch({
+      type: "GET_USER_AND_REPOS",
+      payload: data,
+    });
+  };
 
   //Clear users
   const clearUsers = () =>
@@ -105,10 +110,12 @@ export const GithubProvider = ({ children }) => {
         users: state.users,
         loading: state.loading,
         user: state.user,
+        repos: state.repos,
         fetchUsers,
         searchUsers,
         clearUsers,
-        getUser
+        getUser,
+        getUserAndRepos
       }}
     >
       {children}
